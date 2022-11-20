@@ -1,0 +1,1 @@
+g++ src/schrodinger.cpp src/main.cpp -std=c++11 -larmadillo -o main
