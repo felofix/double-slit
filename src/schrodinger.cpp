@@ -23,6 +23,20 @@ int Schrodinger::matvec(int i, int j){
     }
 }
 
+void Schrodinger::create_initial(double h, double dt, arma::mat V){
+    double r = dt/(2*pow(h, 2));
+    arma::cx_vec ak(M*M, arma::fill::zeros);
+    arma::cx_vec bk(M*M, arma::fill::zeros);
+    for (int i = 0; i < M; i++){
+        for (int j = 0; j < M; j++){
+            ak(matvec(i, j)) = arma::cx_double(1 + 4*r, dt/2*V(i, j));
+            bk(matvec(i, j)) = arma::cx_double(1 - 4*r, -dt/2*V(i, j));
+        }
+    }
+    initialize_A(r, ak);
+    initialize_B(r, bk);
+}
+
 void Schrodinger::initialize_A(double r, arma::cx_vec a){
     A = A.zeros(M*M,M*M);
     arma::cx_mat OF(M*M, M*M, arma::fill::zeros); // Off-diagonal sadly.

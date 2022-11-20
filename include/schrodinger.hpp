@@ -24,6 +24,9 @@ public:
     // Switch between matrix indexes ij and vector position k.
     int matvec(int i, int j);
     
+    // Creating starting conditions.
+    void create_initial(double h, double dt, arma::mat V);
+    
     // Initilizing A matrix.
     void initialize_A(double r, arma::cx_vec a);
     
