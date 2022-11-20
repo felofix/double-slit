@@ -23,7 +23,43 @@ int Schrodinger::matvec(int i, int j){
     }
 }
 
-void Schrodinger::create_initial(double h, double dt, arma::mat V){
+void Schrodinger::initialize_u(double xc, double yc, double sigmax, double sigmay, double px, double py){
+    u = u.zeros(M+2,M+2);
+    
+    for (double i = 1; i < M + 1; i++){
+        for (double j = 1; j < M + 1; j ++){
+            
+            arma::cx_double alpha(exp(-pow((i/M - xc),2)/(2*pow(sigmax,2))),0);
+            
+            arma::cx_double beta(exp(-pow((j/M - yc),2)/(2*pow(sigmay,2))),0);
+
+            arma::cx_double gamma(cos(px*(i/M - xc)), sin(px*(i/M - xc)));
+
+            arma::cx_double sigma(cos(py*(j/M - yc)), sin(py*(j/M - yc)));
+            
+            u(i, j) = alpha*beta*gamma*sigma;
+        }
+    }
+    
+    u = u/cdot(u, u);
+}
+
+void Schrodinger::evolve(){
+    arma::cx_vec vecu((M+2)*(M+2), arma::fill::zeros);
+    for (int i = 1; i < M + 1; i++){
+        for (int j = 1; j < M + 1; j++){
+            vecu(matvec(i, j)) = u(i, j);
+        }
+    }
+    arma::cx_vec b = B*u;
+    arma::cx_vec a = arma::inv(A)*b;
+    
+    for (int i = 1; i < (M+1)*(M+1); i++){
+        u(i) = a(i);
+    }
+}
+
+void Schrodinger::create_AB(double h, double dt, arma::mat V){
     double r = dt/(2*pow(h, 2));
     arma::cx_vec ak(M*M, arma::fill::zeros);
     arma::cx_vec bk(M*M, arma::fill::zeros);
