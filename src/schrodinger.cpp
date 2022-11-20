@@ -7,9 +7,32 @@
 
 #include "../include/schrodinger.hpp"
 
-Schrodinger::Schrodinger(int size, int time){
-    M = size;
+Schrodinger::Schrodinger(int time, double hh, double dtt){
     T = time;
+    h = hh;
+    dt = dtt;
+    M = 1/hh - 2;
+}
+
+// Create potential matrix.
+void Schrodinger::initialize_V_double(double wdx, double wx, double sdy, double soy, double v0){
+    V = V.zeros(M+2, M+2);
+    
+    for (double i = 1; i < M + 1; i++){
+        for (double j = 1; j < M + 1; j++){
+            if (j*h > wx-wdx && j*h < wx + wdx){
+                V(i, j) = v0;
+            }
+            
+            if (i*h > 0.5 - sdy/2 - soy && i*h < 0.5 - sdy/2){
+                V(i, j) = 0;
+            }
+            
+            if (i*h > 0.5 + sdy/2 && i*h < 0.5 + sdy/2 + soy){
+                V(i, j) = 0;
+            }
+        }
+    }
 }
 
 int Schrodinger::matvec(int i, int j){
@@ -29,13 +52,13 @@ void Schrodinger::initialize_u(double xc, double yc, double sigmax, double sigma
     for (double i = 1; i < M + 1; i++){
         for (double j = 1; j < M + 1; j ++){
             
-            arma::cx_double alpha(exp(-pow((i/M - xc),2)/(2*pow(sigmax,2))),0);
+            arma::cx_double alpha(exp(-pow((j*h - xc),2)/(2*pow(sigmax,2))),0);
             
-            arma::cx_double beta(exp(-pow((j/M - yc),2)/(2*pow(sigmay,2))),0);
+            arma::cx_double beta(exp(-pow((i*h - yc),2)/(2*pow(sigmay,2))),0);
 
-            arma::cx_double gamma(cos(px*(i/M - xc)), sin(px*(i/M - xc)));
+            arma::cx_double gamma(cos(px*(j*h - xc)), sin(px*(j*h - xc)));
 
-            arma::cx_double sigma(cos(py*(j/M - yc)), sin(py*(j/M - yc)));
+            arma::cx_double sigma(cos(py*(i*h - yc)), sin(py*(i*h - yc)));
             
             u(i, j) = alpha*beta*gamma*sigma;
         }
@@ -59,7 +82,7 @@ void Schrodinger::evolve(){
     }
 }
 
-void Schrodinger::create_AB(double h, double dt, arma::mat V){
+void Schrodinger::create_AB(){
     double r = dt/(2*pow(h, 2));
     arma::cx_vec ak(M*M, arma::fill::zeros);
     arma::cx_vec bk(M*M, arma::fill::zeros);
@@ -105,4 +128,18 @@ void Schrodinger::initialize_B(double r, arma::cx_vec b){
         }
     }
     B += OF + OF.t();
+}
+
+void Schrodinger::writematrixtofile(arma::mat M, std::string direc){
+    // Writing to file with float values.
+    std::fstream fw;
+    fw.open(direc, std::fstream::app);
+    if (fw.is_open())
+    {
+      for (int i = 0; i < M.row(0).n_elem; i++) {
+          fw << M.row(i) << "\n";
+      }
+      fw.close();
+    }
+    else std::cout << "The file couldnt be opened. " << std::endl;
 }
