@@ -14,16 +14,19 @@
 class Schrodinger{
 public:
     int M; // Size of box.
-    int T; // Time of evolving.
-    arma::cx_mat A;
-    arma::cx_mat B;
+    double T; // Time of evolving.
+    arma::sp_cx_mat A;
+    arma::sp_cx_mat B;
     arma::mat V;
     arma::cx_mat u;
     double h;
     double dt;
     
     // Declaration function.
-    Schrodinger(int T, double h, double dt);
+    Schrodinger(double T, double h, double dt);
+    
+    // Solver.
+    void solve(double xc, double yc, double sigmax, double sigmay, double px, double py, double v0,int slit);
     
     // Switch between matrix indexes ij and vector position k.
     int matvec(int i, int j);
@@ -41,13 +44,13 @@ public:
     void initialize_V_double(double wdx, double wx, double sdy, double soy, double v0);
     
     // Initilizing A matrix.
-    void initialize_A(double r, arma::cx_vec a);
+    void initialize_A(arma::cx_double r, arma::cx_vec a);
     
     // Initilizing B matrix. 
-    void initialize_B(double r, arma::cx_vec b);
+    void initialize_B(arma::cx_double r, arma::cx_vec b);
     
     // Writing matrix to file
-    void writematrixtofile(arma::mat M, std::string direc);
+    void writematrixtofile(arma::cx_mat M, std::string direc);
 };
 
 

@@ -11,14 +11,11 @@
 #include "../include/schrodinger.hpp"
 
 int main(int argc, const char * argv[]) {
-    double size = 0.005; // When a M size is specified, you need to subtract 2.
-    int time = 10;
-    Schrodinger test(time, size, 0.1);
-    test.initialize_V_double(0.02, 0.5, 0.05, 0.05, 1);
-    test.initialize_u(0.25, 0.5, 0.05, 0.05, 200, 0);
-
-    test.writematrixtofile(real(test.u), "test_matrix_real.txt");
-    test.writematrixtofile(imag(test.u), "test_matrix_imag.txt");
+    double size = 0.005;
+    double time = 0.008;
+    double dt = 2.5e-5;
+    Schrodinger test(time, size, dt);
+    test.solve(0.25, 0.5, 0.05, 0.05, 200, 0, 0, 2);
     return 0;
 }
 
