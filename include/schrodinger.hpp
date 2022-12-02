@@ -14,6 +14,7 @@
 class Schrodinger{
 public:
     int M; // Size of box.
+    int I; // internal points
     double T; // Time of evolving.
     arma::sp_cx_mat A;
     arma::sp_cx_mat B;
@@ -40,14 +41,23 @@ public:
     // Creating starting conditions.
     void create_AB();
     
-    // Create potential matrix.
+    // Create single slit potential.
+    void initialize_V_single(double wdx, double wx, double sdy, double soy, double v0);
+    
+    // Create double slit potential.
     void initialize_V_double(double wdx, double wx, double sdy, double soy, double v0);
+    
+    // Create triple slit potential.
+    void initialize_V_triple(double wdx, double wx, double sdy, double soy, double v0);
     
     // Initilizing A matrix.
     void initialize_A(arma::cx_double r, arma::cx_vec a);
     
     // Initilizing B matrix. 
     void initialize_B(arma::cx_double r, arma::cx_vec b);
+    
+    // Writing matrix to file
+    void writerandcmatrixtofile(arma::cx_mat M, std::string direc);
     
     // Writing matrix to file
     void writematrixtofile(arma::cx_mat M, std::string direc);

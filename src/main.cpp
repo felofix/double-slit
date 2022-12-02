@@ -11,11 +11,24 @@
 #include "../include/schrodinger.hpp"
 
 int main(int argc, const char * argv[]) {
-    double size = 0.005;
-    double time = 0.008;
-    double dt = 2.5e-5;
+    if (argc != 12){ // Checking if there is enough command-line.argumets.
+        std::cout << "You have entered to few arguments." << std::endl;
+        return 0;
+    }
+    
+    double size = atof(argv[1]);
+    double dt = atof(argv[2]);
+    double time = atof(argv[3]);
+    double xc = atof(argv[4]);
+    double yc = atof(argv[5]);
+    double sigmax = atof(argv[6]);
+    double sigmay = atof(argv[7]);
+    double px =  atof(argv[8]);
+    double py = atof(argv[9]);
+    double v0 = atof(argv[10]);
+    int slit = atoi(argv[11]);
     Schrodinger test(time, size, dt);
-    test.solve(0.25, 0.5, 0.05, 0.05, 200, 0, 0, 2);
+    test.solve(xc, yc, sigmax, sigmay, px, py, v0, slit);
     return 0;
 }
 
