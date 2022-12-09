@@ -11,7 +11,7 @@ plt.xlabel('t')
 plt.ylabel('1 - $\sum_{i,j}u^{0*}_{ij}u^{0}_{ij}$')
 
 # Plotting noslit.
-plt.plot(t, 1 - noslit)
+plt.plot(t, abs(1 - noslit))
 plt.savefig("plotting/figures/noslit_probabilities.pdf")
 plt.show()
 
@@ -19,6 +19,6 @@ plt.show()
 plt.xlabel('t')
 plt.ylabel('1 - $\sum_{i,j}u^{0*}_{ij}u^{0}_{ij}$')
 
-plt.plot(t, 1 - doslit)
+plt.plot(t, abs(1 - doslit))
 plt.savefig("plotting/figures/doubleslit_probabilities.pdf")
 plt.show()

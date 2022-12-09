@@ -7,6 +7,7 @@ doubleimagmatrix = np.loadtxt("plotting/datafiles/imagmatrix2.txt")
 
 dt = 2.5e-5
 t = np.linspace(dt, 0.002, int(dt/2.5e-5))
+#extent = [x_min , x_max, y_min , y_max]
 
 # All.
 t0all = doublematrix[0:199, :]
@@ -24,47 +25,56 @@ t0001imag = doubleimagmatrix[int(0.001/dt)*199:(int(0.001/dt)*199 + 199), :]
 t002imag = doubleimagmatrix[-200:-1, :]
 
 # All
-plt.imshow(t0all)
+plt.imshow(t0all,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.pdf')
 plt.show()
 
 # All
-plt.imshow(t0001all)
+plt.imshow(t0001all,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # All
-plt.imshow(t002all)
+plt.imshow(t002all,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.02.pdf')
 plt.show()
 
 # Real
-plt.imshow(t0real)
+plt.imshow(t0real,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.pdf')
 plt.show()
 
 # Real
-plt.imshow(t0001real)
+plt.imshow(t0001real,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # Real
-plt.imshow(t002real)
+plt.imshow(t002real,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.02.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t0imag)
+plt.imshow(t0imag,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t0001imag)
+plt.imshow(t0001imag,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t002imag)
+plt.imshow(t002imag,extent=[-1,1,-1,1])
+plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.02.pdf')
 plt.show()
 
