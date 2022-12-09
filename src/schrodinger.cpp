@@ -247,7 +247,7 @@ void Schrodinger::writerandcmatrixtofile(arma::cx_mat M, std::string direc){
     
     if (wf.is_open())
     {
-      wf << real(M)<< "\n";
+      wf << real(M) % real(M) << "\n";
       wf.close();
     }
     
@@ -255,7 +255,7 @@ void Schrodinger::writerandcmatrixtofile(arma::cx_mat M, std::string direc){
     
     if (wfi.is_open())
     {
-      wfi << imag(M)<< "\n";
+      wfi << imag(M) % imag(M) << "\n";
       wfi.close();
     }
 }
