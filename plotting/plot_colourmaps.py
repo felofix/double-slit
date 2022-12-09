@@ -25,55 +25,55 @@ t0001imag = doubleimagmatrix[int(0.001/dt)*199:(int(0.001/dt)*199 + 199), :]
 t002imag = doubleimagmatrix[-200:-1, :]
 
 # All
-plt.imshow(t0all,extent=[-1,1,-1,1])
+plt.imshow(t0all,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.pdf')
 plt.show()
 
 # All
-plt.imshow(t0001all,extent=[-1,1,-1,1])
+plt.imshow(t0001all,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # All
-plt.imshow(t002all,extent=[-1,1,-1,1])
+plt.imshow(t002all,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/all_double_slit_at_t=0.02.pdf')
 plt.show()
 
 # Real
-plt.imshow(t0real,extent=[-1,1,-1,1])
+plt.imshow(t0real,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.pdf')
 plt.show()
 
 # Real
-plt.imshow(t0001real,extent=[-1,1,-1,1])
+plt.imshow(t0001real,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # Real
-plt.imshow(t002real,extent=[-1,1,-1,1])
+plt.imshow(t002real,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/real_double_slit_at_t=0.02.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t0imag,extent=[-1,1,-1,1])
+plt.imshow(t0imag,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t0001imag,extent=[-1,1,-1,1])
+plt.imshow(t0001imag,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.001.pdf')
 plt.show()
 
 # Imag
-plt.imshow(t002imag,extent=[-1,1,-1,1])
+plt.imshow(t002imag,extent=[0,1,0,1])
 plt.colorbar()
 plt.savefig('plotting/figures/imag_double_slit_at_t=0.02.pdf')
 plt.show()
