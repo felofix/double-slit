@@ -8,16 +8,17 @@
 #include "../include/schrodinger.hpp"
 
 Schrodinger::Schrodinger(double time, double hh, double dtt){
-    T = time;
-    h = hh;
-    dt = dtt;
-    M = 1/hh + 1;
+    T = time; // Time of simulation.
+    h = hh; // Size of step in simulation.
+    dt = dtt; // Size of time step in simulation.
+    M = 1/hh + 1; // Size of box in simulation,
     I = M - 2; // Internal points.
 }
 
 // Solver.
 void Schrodinger::solve(double xc, double yc, double sigmax, double sigmay, double px, double py, double v0, int slit){
     
+    // Choosing what slit to use.
     if (slit == 0){
         V = V.zeros(I, I);
     }
@@ -33,10 +34,11 @@ void Schrodinger::solve(double xc, double yc, double sigmax, double sigmay, doub
     if (slit == 3){
         initialize_V_triple(0.02, 0.5, 0.05, 0.05, v0);
     }
-    create_AB();
+    create_AB(); // Initilizing A and B.
     initialize_u(xc, yc, sigmax, sigmay, px, py);
-    double temptime = 0;
-    while (temptime < T){
+    double temptime = 0; // Control time.
+    
+    while (temptime < T){ // for all of the time.
         writematrixtofile(u, "matrix" + std::to_string(slit) + ".txt");
         writerandcmatrixtofile(u, "matrix" + std::to_string(slit) + ".txt");
         evolve();
@@ -46,7 +48,7 @@ void Schrodinger::solve(double xc, double yc, double sigmax, double sigmay, doub
 
 void Schrodinger::initialize_V_single(double wdx, double wx, double sdy, double soy, double v0){
     V = V.zeros(I, I);
-    for (double i = 0; i < I; i++){
+    for (double i = 0; i < I; i++){ 
         for (double j = 0; j < I; j++){
             if (j*h > wx-wdx && j*h < wx + wdx){ // Fills all x values.
                 V(i, j) = v0;
@@ -68,7 +70,7 @@ void Schrodinger::initialize_V_double(double wdx, double wx, double sdy, double 
                 V(i, j) = v0;
             }
             
-            if (i*h > 0.5 - sdy/2 - soy && i*h < 0.5 - sdy/2){ // Removse y valeues.
+            if (i*h > 0.5 - sdy/2 - soy && i*h < 0.5 - sdy/2){ // removes y values.
                 V(i, j) = 0;
             }
             
@@ -111,7 +113,7 @@ int Schrodinger::matvec(int i, int j){
 void Schrodinger::initialize_u(double xc, double yc, double sigmax, double sigmay, double px, double py){
     u = u.zeros(I,I);
 
-    for (double i = 0; i < I; i++){
+    for (double i = 0; i < I; i++){ // Looping through and filling with initial wave function .
         for (double j = 0; j < I; j ++){
 
             arma::cx_double alpha(exp(-pow((j*h - xc),2)/(2*pow(sigmax,2))),0);
@@ -133,7 +135,7 @@ void Schrodinger::initialize_u(double xc, double yc, double sigmax, double sigma
 void Schrodinger::evolve(){    
     arma::cx_vec vecu(I*I, arma::fill::zeros);
     
-    for (int i = 0; i < I; i++){
+    for (int i = 0; i < I; i++){   // Matrix to vector.
         for (int j = 0; j < I; j++){
             vecu(matvec(i, j)) = u(i,j);
         }
